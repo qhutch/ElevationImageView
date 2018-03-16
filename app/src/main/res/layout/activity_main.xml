@@ -26,8 +26,7 @@
             android:layout_height="140dp"
             android:layout_margin="16dp"
             android:background="#FF0000"
-            android:src="@drawable/ic_android_black_24dp"
-            app:compatEvelation="24dp" />
+            android:src="@drawable/ic_android_black_24dp" />
 
     </LinearLayout>
 
