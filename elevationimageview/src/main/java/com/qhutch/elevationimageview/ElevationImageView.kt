@@ -54,9 +54,9 @@ class ElevationImageView : ImageView {
 
     private var customElevation = 0f
 
-    private val rs = RenderScript.create(context)
-    private val blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-    private val convertToShadowAlphaScript = ScriptC_convertToShadowAlpha(rs)
+    private lateinit var rs: RenderScript
+    private lateinit var blurScript: ScriptIntrinsicBlur
+    private lateinit var convertToShadowAlphaScript: ScriptC_convertToShadowAlpha
 
     override fun setElevation(elevation: Float) {
         customElevation = elevation
@@ -101,6 +101,13 @@ class ElevationImageView : ImageView {
         convertToShadowAlphaScript.destroy()
         rs.destroy()
         super.onDetachedFromWindow()
+    }
+
+    override fun onAttachedToWindow() {
+        rs = RenderScript.create(context)
+        blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+        convertToShadowAlphaScript = ScriptC_convertToShadowAlpha(rs)
+        super.onAttachedToWindow()
     }
 
     private fun getBlurRadius(): Float {
