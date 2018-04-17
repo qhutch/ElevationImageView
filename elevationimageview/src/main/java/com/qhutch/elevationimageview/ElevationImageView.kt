@@ -18,7 +18,7 @@ import android.util.TypedValue
 /**
  * Created by quentin on 15/03/2018.
  */
-class ElevationImageView : AppCompatImageView {
+open class ElevationImageView : AppCompatImageView {
 
     constructor(context: Context) : super(context) {
         init(null)
