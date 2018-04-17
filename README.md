@@ -14,7 +14,7 @@ Add this to your app build.gradle
 ```
 dependencies {
     ...
-    implementation 'com.qhutch.elevationimageview:elevationimageview:1.1'
+    implementation 'com.qhutch.elevationimageview:elevationimageview:1.2'
 }
 ```
 You will also need support renderscript, also in your build.gradle :
@@ -41,6 +41,8 @@ The clipShadow attribute is set to false by default, if true, it will clip the s
 To set the elevation programmatically, you can use setElevation() and pass a value in pixels or setElevationDp() and pass a value in dp.
 
 ## Changelog
+
+- **V1.2** : Extend AppCompatImageView to allow usage of `app:srcCompat` attribute
 
 - **V1.1** : Fixed NPE when view was detached from window and the reattached
 

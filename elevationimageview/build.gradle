@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/qhutch/ElevationImageView'
     gitUrl = 'https://github.com/qhutch/ElevationImageView.git'
 
-    libraryVersion = '1.1'
+    libraryVersion = '1.2'
 
     developerId = 'qhutch'
     developerName = 'Quentin Menini'
