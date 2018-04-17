@@ -6,19 +6,19 @@ import android.graphics.Canvas
 import android.graphics.Region
 import android.os.Build
 import android.support.annotation.AttrRes
+import android.support.v7.widget.AppCompatImageView
 import android.support.v8.renderscript.Allocation
 import android.support.v8.renderscript.Element
 import android.support.v8.renderscript.RenderScript
 import android.support.v8.renderscript.ScriptIntrinsicBlur
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.widget.ImageView
 
 
 /**
  * Created by quentin on 15/03/2018.
  */
-class ElevationImageView : ImageView {
+class ElevationImageView : AppCompatImageView {
 
     constructor(context: Context) : super(context) {
         init(null)

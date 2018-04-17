@@ -17,7 +17,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_android_black_24dp"
+            app:srcCompat="@drawable/ic_android_black_24dp"
             android:tint="#569310" />
 
         <com.qhutch.elevationimageview.ElevationImageView
