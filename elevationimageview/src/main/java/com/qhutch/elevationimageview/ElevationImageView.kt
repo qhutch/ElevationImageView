@@ -69,25 +69,26 @@ class ElevationImageView : AppCompatImageView {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (shadowBitmap == null && canvas != null && customElevation > 0) {
-            generateShadow()
-        }
-
-        if (shadowBitmap != null) {
-
-            if (!clipShadow) {
-                canvas?.let {
-                    val newRect = it.clipBounds
-                    newRect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
-                    it.clipRect(newRect, Region.Op.REPLACE)
-                }
+        if (!isInEditMode) {
+            if (shadowBitmap == null && canvas != null && customElevation > 0) {
+                generateShadow()
             }
 
-            val bounds = drawable.copyBounds()
-            canvas?.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
+            if (shadowBitmap != null) {
 
+                if (!clipShadow) {
+                    canvas?.let {
+                        val newRect = it.clipBounds
+                        newRect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
+                        it.clipRect(newRect, Region.Op.REPLACE)
+                    }
+                }
+
+                val bounds = drawable.copyBounds()
+                canvas?.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
+
+            }
         }
-
         super.onDraw(canvas)
     }
 
@@ -97,16 +98,20 @@ class ElevationImageView : AppCompatImageView {
     }
 
     override fun onDetachedFromWindow() {
-        blurScript.destroy()
-        convertToShadowAlphaScript.destroy()
-        rs.destroy()
+        if (!isInEditMode) {
+            blurScript.destroy()
+            convertToShadowAlphaScript.destroy()
+            rs.destroy()
+        }
         super.onDetachedFromWindow()
     }
 
     override fun onAttachedToWindow() {
-        rs = RenderScript.create(context)
-        blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-        convertToShadowAlphaScript = ScriptC_convertToShadowAlpha(rs)
+        if (!isInEditMode) {
+            rs = RenderScript.create(context)
+            blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
+            convertToShadowAlphaScript = ScriptC_convertToShadowAlpha(rs)
+        }
         super.onAttachedToWindow()
     }
 
