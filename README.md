@@ -42,6 +42,8 @@ To set the elevation programmatically, you can use setElevation() and pass a val
 
 ## Changelog
 
+- **V1.4** : Opened ElevationImageView class
+
 - **V1.3** : Fixed crash in edit mode by disabling renderscript
 
 - **V1.2** : Extend AppCompatImageView to allow usage of `app:srcCompat` attribute
