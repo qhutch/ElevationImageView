@@ -14,7 +14,7 @@ Add this to your app build.gradle
 ```
 dependencies {
     ...
-    implementation 'com.qhutch.elevationimageview:elevationimageview:1.3'
+    implementation 'com.qhutch.elevationimageview:elevationimageview:1.4'
 }
 ```
 You will also need support renderscript, also in your build.gradle :
