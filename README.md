@@ -14,7 +14,7 @@ Add this to your app build.gradle
 ```
 dependencies {
     ...
-    implementation 'com.qhutch.elevationimageview:elevationimageview:1.4'
+    implementation 'com.qhutch.elevationimageview:elevationimageview:1.5'
 }
 ```
 You will also need support renderscript, also in your build.gradle :
@@ -40,7 +40,11 @@ The clipShadow attribute is set to false by default, if true, it will clip the s
 
 To set the elevation programmatically, you can use setElevation() and pass a value in pixels or setElevationDp() and pass a value in dp.
 
+Use translucent attribute or setTranslucent() method to make the shadow keep the color of the image
+
 ## Changelog
+
+- **V1.5** : Added translucent attribute
 
 - **V1.4** : Opened ElevationImageView class
 
