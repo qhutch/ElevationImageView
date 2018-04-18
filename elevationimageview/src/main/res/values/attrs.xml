@@ -3,5 +3,6 @@
     <declare-styleable name="ElevationImageView">
         <attr name="compatEvelation" format="dimension"/>
         <attr name="clipShadow" format="boolean"/>
+        <attr name="isTranslucent" format="boolean"/>
     </declare-styleable>
 </resources>

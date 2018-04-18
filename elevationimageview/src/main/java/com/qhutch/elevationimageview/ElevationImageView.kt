@@ -45,6 +45,8 @@ open class ElevationImageView : AppCompatImageView {
 
         clipShadow = a.getBoolean(R.styleable.ElevationImageView_clipShadow, false)
 
+        isTranslucent = a.getBoolean(R.styleable.ElevationImageView_isTranslucent, false)
+
         a.recycle()
     }
 
@@ -54,9 +56,15 @@ open class ElevationImageView : AppCompatImageView {
 
     private var customElevation = 0f
 
+    var isTranslucent = false
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     private lateinit var rs: RenderScript
     private lateinit var blurScript: ScriptIntrinsicBlur
-    private lateinit var convertToShadowAlphaScript: ScriptC_convertToShadowAlpha
+    private lateinit var convertToShadowAlphaScript: ScriptC_convertToClearShadow
 
     override fun setElevation(elevation: Float) {
         customElevation = elevation
@@ -110,7 +118,7 @@ open class ElevationImageView : AppCompatImageView {
         if (!isInEditMode) {
             rs = RenderScript.create(context)
             blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-            convertToShadowAlphaScript = ScriptC_convertToShadowAlpha(rs)
+            convertToShadowAlphaScript = ScriptC_convertToClearShadow(rs)
         }
         super.onAttachedToWindow()
     }
@@ -124,6 +132,7 @@ open class ElevationImageView : AppCompatImageView {
         val allocationIn = Allocation.createFromBitmap(rs, bitmap)
         val allocationOut = Allocation.createTyped(rs, allocationIn.type)
 
+        convertToShadowAlphaScript._isTranslucent = isTranslucent
         convertToShadowAlphaScript.forEach_root(allocationIn, allocationOut)
 
         blurScript.setRadius(getBlurRadius())

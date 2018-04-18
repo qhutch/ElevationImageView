@@ -17,6 +17,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_margin="16dp"
+            app:isTranslucent="true"
             app:srcCompat="@drawable/ic_android_black_24dp"
             android:tint="#569310" />
 
@@ -39,6 +40,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_margin="16dp"
+            app:isTranslucent="true"
             android:src="@drawable/donut" />
 
         <com.qhutch.elevationimageview.ElevationImageView
