@@ -7,10 +7,7 @@ import android.graphics.Region
 import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.v7.widget.AppCompatImageView
-import android.support.v8.renderscript.Allocation
-import android.support.v8.renderscript.Element
-import android.support.v8.renderscript.RenderScript
-import android.support.v8.renderscript.ScriptIntrinsicBlur
+import android.support.v8.renderscript.*
 import android.util.AttributeSet
 import android.util.TypedValue
 
@@ -64,7 +61,7 @@ open class ElevationImageView : AppCompatImageView {
 
     private lateinit var rs: RenderScript
     private lateinit var blurScript: ScriptIntrinsicBlur
-    private lateinit var convertToShadowAlphaScript: ScriptC_convertToClearShadow
+    private lateinit var colorMatrixScript: ScriptIntrinsicColorMatrix
 
     override fun setElevation(elevation: Float) {
         customElevation = elevation
@@ -108,7 +105,7 @@ open class ElevationImageView : AppCompatImageView {
     override fun onDetachedFromWindow() {
         if (!isInEditMode) {
             blurScript.destroy()
-            convertToShadowAlphaScript.destroy()
+            colorMatrixScript.destroy()
             rs.destroy()
         }
         super.onDetachedFromWindow()
@@ -117,8 +114,9 @@ open class ElevationImageView : AppCompatImageView {
     override fun onAttachedToWindow() {
         if (!isInEditMode) {
             rs = RenderScript.create(context)
-            blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
-            convertToShadowAlphaScript = ScriptC_convertToClearShadow(rs)
+            val element = Element.U8_4(rs)
+            blurScript = ScriptIntrinsicBlur.create(rs, element)
+            colorMatrixScript = ScriptIntrinsicColorMatrix.create(rs, element)
         }
         super.onAttachedToWindow()
     }
@@ -132,8 +130,22 @@ open class ElevationImageView : AppCompatImageView {
         val allocationIn = Allocation.createFromBitmap(rs, bitmap)
         val allocationOut = Allocation.createTyped(rs, allocationIn.type)
 
-        convertToShadowAlphaScript._isTranslucent = isTranslucent
-        convertToShadowAlphaScript.forEach_root(allocationIn, allocationOut)
+        val matrix = if (isTranslucent) {
+            Matrix4f(floatArrayOf(
+                    0.4f, 0f, 0f, 0f,
+                    0f, 0.4f, 0f, 0f,
+                    0f, 0f, 0.4f, 0f,
+                    0f, 0f, 0f, 0.6f))
+        } else {
+            Matrix4f(floatArrayOf(
+                    0f, 0f, 0f, 0f,
+                    0f, 0f, 0f, 0f,
+                    0f, 0f, 0f, 0f,
+                    0f, 0f, 0f, 0.4f))
+        }
+
+        colorMatrixScript.setColorMatrix(matrix)
+        colorMatrixScript.forEach(allocationIn, allocationOut)
 
         blurScript.setRadius(getBlurRadius())
 
