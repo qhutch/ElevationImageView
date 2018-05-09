@@ -161,7 +161,9 @@ open class ElevationImageView : AppCompatImageView {
     }
 
     private fun generateShadow() {
-        shadowBitmap = getShadowBitmap(getBitmapFromDrawable())
+        drawable?.let {
+            shadowBitmap = getShadowBitmap(getBitmapFromDrawable())
+        }
     }
 
     private fun getBitmapFromDrawable(): Bitmap {
