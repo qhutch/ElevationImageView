@@ -3,6 +3,7 @@ package com.qhutch.elevationimageview
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Region
 import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.v7.widget.AppCompatImageView
@@ -82,18 +83,15 @@ open class ElevationImageView : AppCompatImageView {
 
                 if (!clipShadow) {
                     canvas?.let {
-                        canvas.save()
-                        canvas.clipRect(
-                                -2 * getBlurRadius().toInt(),
-                                -2 * getBlurRadius().toInt(),
-                                canvas.height + 2 * getBlurRadius().toInt(),
-                                canvas.width + 2 * getBlurRadius().toInt()
-                        )
-                        val bounds = drawable.copyBounds()
-                        canvas?.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
-                        canvas.restore()
+                        val newRect = it.clipBounds
+                        newRect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
+                        it.clipRect(newRect, Region.Op.REPLACE)
                     }
                 }
+
+                val bounds = drawable.copyBounds()
+                canvas?.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
+
             }
         }
         super.onDraw(canvas)
