@@ -3,6 +3,7 @@ package com.qhutch.elevationimageview
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.graphics.Region
 import android.os.Build
 import android.support.annotation.AttrRes
@@ -53,6 +54,8 @@ open class ElevationImageView : AppCompatImageView {
 
     private var customElevation = 0f
 
+    private var rect = Rect()
+
     var isTranslucent = false
         set(value) {
             field = value
@@ -74,24 +77,24 @@ open class ElevationImageView : AppCompatImageView {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (!isInEditMode) {
-            if (shadowBitmap == null && canvas != null && customElevation > 0) {
+        if (!isInEditMode && canvas != null) {
+            if (shadowBitmap == null && customElevation > 0) {
                 generateShadow()
             }
 
             if (shadowBitmap != null) {
+                canvas.save()
 
                 if (!clipShadow) {
-                    canvas?.let {
-                        val newRect = it.clipBounds
-                        newRect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
-                        it.clipRect(newRect, Region.Op.REPLACE)
-                    }
+                    canvas.getClipBounds(rect)
+                    rect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
+                    canvas.clipRect(rect, Region.Op.REPLACE)
                 }
 
                 val bounds = drawable.copyBounds()
-                canvas?.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
+                canvas.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
 
+                canvas.restore()
             }
         }
         super.onDraw(canvas)
