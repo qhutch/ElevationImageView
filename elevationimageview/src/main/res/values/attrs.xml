@@ -4,5 +4,6 @@
         <attr name="compatEvelation" format="dimension"/>
         <attr name="clipShadow" format="boolean"/>
         <attr name="isTranslucent" format="boolean"/>
+        <attr name="forceClip" format="boolean"/>
     </declare-styleable>
 </resources>

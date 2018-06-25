@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatImageView
 import android.support.v8.renderscript.*
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.ViewGroup
 
 
 /**
@@ -45,6 +46,8 @@ open class ElevationImageView : AppCompatImageView {
 
         isTranslucent = a.getBoolean(R.styleable.ElevationImageView_isTranslucent, false)
 
+        forceClip = a.getBoolean(R.styleable.ElevationImageView_forceClip, false)
+
         a.recycle()
     }
 
@@ -55,6 +58,12 @@ open class ElevationImageView : AppCompatImageView {
     private var customElevation = 0f
 
     private var rect = Rect()
+
+    private var forceClip = false
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     var isTranslucent = false
         set(value) {
@@ -88,7 +97,11 @@ open class ElevationImageView : AppCompatImageView {
                 if (!clipShadow) {
                     canvas.getClipBounds(rect)
                     rect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
-                    canvas.clipRect(rect, Region.Op.REPLACE)
+                    if (forceClip) {
+                        canvas.clipRect(rect)
+                    } else {
+                        canvas.clipRect(rect, Region.Op.REPLACE)
+                    }
                 }
 
                 val bounds = drawable.copyBounds()
@@ -116,6 +129,10 @@ open class ElevationImageView : AppCompatImageView {
 
     override fun onAttachedToWindow() {
         if (!isInEditMode) {
+
+            if (forceClip) {
+                (parent as ViewGroup).clipChildren = false
+            }
             rs = RenderScript.create(context)
             val element = Element.U8_4(rs)
             blurScript = ScriptIntrinsicBlur.create(rs, element)
