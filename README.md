@@ -14,7 +14,7 @@ Add this to your app build.gradle
 ```
 dependencies {
     ...
-    implementation 'com.qhutch.elevationimageview:elevationimageview:2.0'
+    implementation 'com.qhutch.elevationimageview:elevationimageview:2.1'
 }
 ```
 You will also need support renderscript, also in your build.gradle :
@@ -43,6 +43,8 @@ To set the elevation programmatically, you can use setElevation() and pass a val
 Use translucent attribute or setTranslucent() method to make the shadow keep the color of the image
 
 ## Changelog
+
+- **V2.1** : support for android P (thanks to @jlurena)
 
 - **V2.0** : Boolean attribute 'forceClip' to use another clipping method if set as true
 
