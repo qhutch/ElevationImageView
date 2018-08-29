@@ -90,7 +90,7 @@ open class ElevationImageView : AppCompatImageView {
             if (shadowBitmap == null && customElevation > 0) {
                 generateShadow()
             }
-
+            val bounds = drawable.copyBounds()
             if (shadowBitmap != null) {
                 canvas.save()
 
@@ -100,12 +100,11 @@ open class ElevationImageView : AppCompatImageView {
                     if (forceClip) {
                         canvas.clipRect(rect)
                     } else {
-                        canvas.clipRect(rect, Region.Op.REPLACE)
+                        canvas.save()
+                        canvas.clipRect(rect)
                     }
+                    canvas.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
                 }
-
-                val bounds = drawable.copyBounds()
-                canvas.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
 
                 canvas.restore()
             }
