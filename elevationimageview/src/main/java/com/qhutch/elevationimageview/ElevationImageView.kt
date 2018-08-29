@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Rect
-import android.graphics.Region
 import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.v7.widget.AppCompatImageView
@@ -91,7 +90,7 @@ open class ElevationImageView : AppCompatImageView {
                 generateShadow()
             }
             val bounds = drawable.copyBounds()
-            if (shadowBitmap != null) {
+            shadowBitmap?.let {
                 canvas.save()
 
                 if (!clipShadow) {
@@ -103,7 +102,7 @@ open class ElevationImageView : AppCompatImageView {
                         canvas.save()
                         canvas.clipRect(rect)
                     }
-                    canvas.drawBitmap(shadowBitmap, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
+                    canvas.drawBitmap(it, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
                 }
 
                 canvas.restore()
