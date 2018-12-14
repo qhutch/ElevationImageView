@@ -44,6 +44,8 @@ Use translucent attribute or setTranslucent() method to make the shadow keep the
 
 ## Changelog
 
+- **V2.3** : fixed npe when drawable was null
+
 - **V2.1** : support for android P (thanks to @jlurena)
 
 - **V2.0** : Boolean attribute 'forceClip' to use another clipping method if set as true

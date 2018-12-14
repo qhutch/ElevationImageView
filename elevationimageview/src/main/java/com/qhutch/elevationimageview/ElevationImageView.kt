@@ -89,23 +89,25 @@ open class ElevationImageView : AppCompatImageView {
             if (shadowBitmap == null && customElevation > 0) {
                 generateShadow()
             }
-            val bounds = drawable.copyBounds()
-            shadowBitmap?.let {
-                canvas.save()
+            drawable?.let { drawable ->
+                val bounds = drawable.copyBounds()
+                shadowBitmap?.let {
+                    canvas.save()
 
-                if (!clipShadow) {
-                    canvas.getClipBounds(rect)
-                    rect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
-                    if (forceClip) {
-                        canvas.clipRect(rect)
-                    } else {
-                        canvas.save()
-                        canvas.clipRect(rect)
+                    if (!clipShadow) {
+                        canvas.getClipBounds(rect)
+                        rect.inset(-2 * getBlurRadius().toInt(), -2 * getBlurRadius().toInt())
+                        if (forceClip) {
+                            canvas.clipRect(rect)
+                        } else {
+                            canvas.save()
+                            canvas.clipRect(rect)
+                        }
+                        canvas.drawBitmap(it, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
                     }
-                    canvas.drawBitmap(it, bounds.left.toFloat() - getBlurRadius(), bounds.top - getBlurRadius() / 2f, null)
-                }
 
-                canvas.restore()
+                    canvas.restore()
+                }
             }
         }
         super.onDraw(canvas)
