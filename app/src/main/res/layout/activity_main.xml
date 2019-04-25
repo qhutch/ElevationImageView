@@ -9,6 +9,7 @@
     tools:context="com.qhutch.shadowimageview.MainActivity">
 
     <LinearLayout
+        android:clipChildren="false"          
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -32,6 +33,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:clipChildren="false"          
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
