@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/qhutch/ElevationImageView'
     gitUrl = 'https://github.com/qhutch/ElevationImageView.git'
 
-    libraryVersion = '2.3'
+    libraryVersion = '2.4'
 
     developerId = 'qhutch'
     developerName = 'Quentin Menini'
@@ -31,9 +31,9 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 3
-        versionName "2.3"
+        versionName "2.4"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         renderscriptTargetApi 18
         renderscriptSupportModeEnabled true
@@ -51,7 +51,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version"
 }
 repositories {

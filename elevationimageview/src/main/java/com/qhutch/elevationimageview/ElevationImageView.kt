@@ -5,12 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
-import android.support.annotation.AttrRes
-import android.support.v7.widget.AppCompatImageView
-import android.support.v8.renderscript.*
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
+import androidx.annotation.AttrRes
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.renderscript.*
 
 
 /**
