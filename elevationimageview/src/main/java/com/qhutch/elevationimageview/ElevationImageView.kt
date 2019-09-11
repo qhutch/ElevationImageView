@@ -10,7 +10,7 @@ import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.annotation.AttrRes
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.renderscript.*
+import android.renderscript.*
 
 
 /**
